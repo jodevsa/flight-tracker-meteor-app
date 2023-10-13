@@ -38,7 +38,7 @@ export function FlightTrackerMap() {
     const markers = []
 
     for (const plane of planes) {
-        markers.push(<AirplanePin selected={plane.selected} key={plane._id} _id={plane._id} longitude={plane.location.long} latitude={plane.location.lat} name={plane.plane} />)
+        markers.push(<AirplanePin selected={plane.selected} key={plane._id} _id={plane._id} longitude={plane.location.long} latitude={plane.location.lat} name={plane.name} />)
     }
 
 
