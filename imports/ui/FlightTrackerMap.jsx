@@ -17,11 +17,14 @@ export function FlightTrackerMap() {
     const isLoadingPlanes = useSubscribe('planes');
     // get the data
     const planes = useFind(() => PlanesCollection.find());
-    const configuration = useFind(() => ConfigurationCollection.findOne());
-    console.log(configuration)
+    const configurationList = useFind(() => ConfigurationCollection.find());
+
     if (isLoadingConfiguration() || isLoadingPlanes()) {
         return <div>Loading...</div>;
     }
+
+    const {mapboxAccessToken} = configurationList[0]
+
 
     const selected = planes.filter(e => e.selected == true)
 

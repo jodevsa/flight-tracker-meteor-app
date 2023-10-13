@@ -12,8 +12,6 @@ for (let i = 0; i < planesCount; i++) {
   planes[a] = { plane: [a], location: { long: 90, lat: 90 } }
 }
 
-
-
 function generateLocation(location, max = 2000) {
   let latitude = location.lat
   let longitude = location.long
@@ -25,13 +23,9 @@ function generateLocation(location, max = 2000) {
     latitude = Math.random() * 90 * (Math.round(Math.random()) ? 1 : -1)
   }
 
-  let longIncrease = Math.random() * 0.1
-  let latIncrease = Math.random() * 0.1
-
-
-  const newLatitude = Math.min(90, latitude + longIncrease)
-  const newLongitude = Math.min(90, longitude + longIncrease)
-
+  let inc = Math.random() * 0.1
+  const newLatitude = Math.min(90, latitude + inc)
+  const newLongitude = Math.min(90, longitude + inc)
 
   return {
     lat: newLatitude,
@@ -46,9 +40,10 @@ Meteor.startup(async () => {
   await PlanesCollection.removeAsync({})
   await ConfigurationCollection.removeAsync({})
 
-  ConfigurationCollection.insertAsync({
+  await ConfigurationCollection.insertAsync({
     mapboxAccessToken: process.env.MAP_BOX_ACCESS_TOKEN
   })
+
   for (const plane of Object.keys(planes)) {
     const planeObject = planes[plane]
     planeObject.location = generateLocation(planeObject.location)
@@ -60,11 +55,6 @@ Meteor.startup(async () => {
     )
 
   }
-
-  // If the Links collection is empty, add some data.
-
-
-
 
   setInterval(async function () {
     for (const plane of Object.keys(planes)) {
@@ -83,7 +73,7 @@ Meteor.startup(async () => {
 
 
   Meteor.publish("configuration", function () {
-    return ConfigurationCollection.findOne();
+    return ConfigurationCollection.find();
   });
 
   Meteor.publish("planes", function () {
