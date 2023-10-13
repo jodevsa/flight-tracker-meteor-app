@@ -1,0 +1,17 @@
+body {
+
+  font-family: sans-serif;
+}
+
+.react-target {
+  text-align: center;
+  height: 100%;
+
+}
+
+.map-wrapper {
+  height: calc(100vh - 20px);
+  position: relative;
+  top: 0px;
+  width: 100%;
+}
